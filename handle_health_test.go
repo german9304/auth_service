@@ -13,5 +13,7 @@ func TestHandleHealthOkStatus(t *testing.T) {
 	res := httptest.NewRecorder()
 	handler := handleHealth()
 	handler.ServeHTTP(res, req)
-	logrus.Info(res.Result().StatusCode)
+	if res.Result().StatusCode != http.StatusOK {
+		logrus.Fatalf("got: %d expected: %d\n", res.Result().StatusCode, http.StatusOK)
+	}
 }
