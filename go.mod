@@ -1,4 +1,4 @@
-module auth_service
+module github.com/authservice
 
 go 1.16
 
