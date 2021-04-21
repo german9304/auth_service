@@ -1,5 +1,7 @@
-# Authentication service
+# Authentication/Authorization provider
 
-* Service for the creation of users
+Protocols
 
-* Authorization and authentication with json web token (JWT)
+* oauth2 
+* OpenId connect
+
