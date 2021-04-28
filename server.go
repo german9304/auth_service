@@ -4,6 +4,10 @@ import (
 	"net/http"
 )
 
+const (
+	PORT = 8080
+)
+
 type server struct {
 	mux *http.ServeMux
 }

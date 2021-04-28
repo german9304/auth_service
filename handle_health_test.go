@@ -9,6 +9,7 @@ import (
 )
 
 func TestHandleHealthOkStatus(t *testing.T) {
+	t.Parallel()
 	req := httptest.NewRequest(http.MethodPost, "http://localhost:8080/test", nil)
 	res := httptest.NewRecorder()
 	handler := handleHealth()
