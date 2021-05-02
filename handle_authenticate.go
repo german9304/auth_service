@@ -1,24 +1,21 @@
 package server
 
 import (
-	"encoding/json"
-	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 
 	"github.com/sirupsen/logrus"
 )
 
-type authQueryMeta struct {
+type oauthQueryMeta struct {
 	responseType string
 	redirectUri  string
 	clientId     string
 	responseMode string
 }
 
-func (r authQueryMeta) new(queryValues url.Values) authQueryMeta {
-	return authQueryMeta{
+func newAuthQueryMeta(queryValues url.Values) oauthQueryMeta {
+	return oauthQueryMeta{
 		responseType: queryValues.Get("response_type"),
 		redirectUri:  queryValues.Get("redirect_uri"),
 		clientId:     queryValues.Get("client_id"),
@@ -34,19 +31,18 @@ type User struct {
 // handles authentication
 func handleAuthenticate() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		body, err := ioutil.ReadAll(r.Body)
+		logrus.Info("authenticating with username and password")
+		// parse url encoded form
+		err := r.ParseForm()
 		if err != nil {
-			http.Error(w, "could not read request body", http.StatusBadRequest)
-			return
+			logrus.Info(err)
 		}
+		username := r.Form.Get("username")
+		password := r.Form.Get("password")
 
-		var user User
-		err = json.Unmarshal(body, &user)
-		if err != nil {
-			log.Fatal(err)
-		}
-		logrus.Infof("name: %s, password: %s\n", user.Name, user.Password)
+		logrus.Infof("password: %s\n", password)
+		logrus.Infof("username: %s\n", username)
 
-		w.WriteHeader(http.StatusOK)
+		http.Redirect(w, r, "http://localhost:8080/api/health", http.StatusFound)
 	}
 }

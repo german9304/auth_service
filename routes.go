@@ -12,7 +12,7 @@ func (s *server) Routes() error {
 	s.mux.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir(filepath.Join(dir, "/client", "/public")))))
 	s.mux.HandleFunc("/login", handleLogin())
 	s.mux.HandleFunc("/authenticate", handleAuthenticate())
-	s.mux.HandleFunc("/.well-known/openid-configuration", handleOpenId())
+	s.mux.HandleFunc("/.well-known/openid-configuration", handleOpenId(s.port))
 
 	return err
 }

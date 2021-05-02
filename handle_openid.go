@@ -18,15 +18,15 @@ type openIdFields struct {
 
 // handleOpenId endpoint for openId meta fields
 // to authenticate users.
-func handleOpenId() http.HandlerFunc {
+func handleOpenId(port string) http.HandlerFunc {
 	const uri = "http://localhost:"
 	return func(w http.ResponseWriter, r *http.Request) {
 		openIdField := openIdFields{
-			AuthorizationEndpoint: fmt.Sprintf("%s%d/authorize", uri, PORT),
-			Issuer:                fmt.Sprintf("%s%d", uri, PORT),
-			JwksUri:               fmt.Sprintf("%s%d/.well-known/jwks.json", uri, PORT),
-			TokenEndpoint:         fmt.Sprintf("%s%d/token", uri, PORT),
-			UserinfoEndpoint:      fmt.Sprintf("%s%d/userinfo", uri, PORT),
+			AuthorizationEndpoint: fmt.Sprintf("%s%s/authorize", uri, port),
+			Issuer:                fmt.Sprintf("%s%s", uri, port),
+			JwksUri:               fmt.Sprintf("%s%s/.well-known/jwks.json", uri, port),
+			TokenEndpoint:         fmt.Sprintf("%s%s/token", uri, port),
+			UserinfoEndpoint:      fmt.Sprintf("%s%s/userinfo", uri, port),
 		}
 
 		b, err := json.Marshal(openIdField)
