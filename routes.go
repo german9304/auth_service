@@ -1,7 +1,17 @@
 package server
 
-func (s *server) Routes() {
+import (
+	"net/http"
+	"os"
+	"path/filepath"
+)
+
+func (s *server) Routes() error {
+	dir, err := os.Getwd()
 	s.mux.HandleFunc("/health", handleHealth())
-	s.mux.HandleFunc("/authorize", handleAuthenticate())
+	s.mux.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir(filepath.Join(dir, "/client", "/public")))))
+	s.mux.HandleFunc("/authenticate", handleAuthenticate())
 	s.mux.HandleFunc("/.well-known/openid-configuration", handleOpenId())
+
+	return err
 }
