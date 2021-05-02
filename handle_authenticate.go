@@ -1,10 +1,11 @@
 package server
 
 import (
+	"encoding/json"
+	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
-	"os"
-	"path/filepath"
 
 	"github.com/sirupsen/logrus"
 )
@@ -25,14 +26,27 @@ func (r authQueryMeta) new(queryValues url.Values) authQueryMeta {
 	}
 }
 
+type User struct {
+	Name     string
+	Password string
+}
+
 // handles authentication
 func handleAuthenticate() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		dir, err := os.Getwd()
+		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			logrus.Fatal(err)
+			http.Error(w, "could not read request body", http.StatusBadRequest)
+			return
 		}
-		logrus.Info("user is authenticating")
-		http.ServeFile(w, r, filepath.Join(dir, "/client", "/public", "/index.html"))
+
+		var user User
+		err = json.Unmarshal(body, &user)
+		if err != nil {
+			log.Fatal(err)
+		}
+		logrus.Infof("name: %s, password: %s\n", user.Name, user.Password)
+
+		w.WriteHeader(http.StatusOK)
 	}
 }
