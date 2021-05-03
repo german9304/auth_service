@@ -4,12 +4,9 @@ import (
 	"net/http"
 )
 
-const (
-	PORT = 8080
-)
-
 type server struct {
-	mux *http.ServeMux
+	mux  *http.ServeMux
+	port string
 }
 
 func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -20,9 +17,10 @@ func (s *server) Mux() *http.ServeMux {
 	return s.mux
 }
 
-func New() *server {
+func New(port string) *server {
 	s := &server{
-		mux: http.NewServeMux(),
+		mux:  http.NewServeMux(),
+		port: port,
 	}
 	s.Routes()
 	return s

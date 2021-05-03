@@ -3,21 +3,19 @@ package server
 import (
 	"net/http"
 	"net/url"
-	"os"
-	"path/filepath"
 
 	"github.com/sirupsen/logrus"
 )
 
-type authQueryMeta struct {
+type oauthQueryMeta struct {
 	responseType string
 	redirectUri  string
 	clientId     string
 	responseMode string
 }
 
-func (r authQueryMeta) new(queryValues url.Values) authQueryMeta {
-	return authQueryMeta{
+func newAuthQueryMeta(queryValues url.Values) oauthQueryMeta {
+	return oauthQueryMeta{
 		responseType: queryValues.Get("response_type"),
 		redirectUri:  queryValues.Get("redirect_uri"),
 		clientId:     queryValues.Get("client_id"),
@@ -25,14 +23,26 @@ func (r authQueryMeta) new(queryValues url.Values) authQueryMeta {
 	}
 }
 
+type User struct {
+	Name     string
+	Password string
+}
+
 // handles authentication
 func handleAuthenticate() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		dir, err := os.Getwd()
+		logrus.Info("authenticating with username and password")
+		// parse url encoded form
+		err := r.ParseForm()
 		if err != nil {
-			logrus.Fatal(err)
+			logrus.Info(err)
 		}
-		logrus.Info("user is authenticating")
-		http.ServeFile(w, r, filepath.Join(dir, "/client", "/public", "/index.html"))
+		username := r.Form.Get("username")
+		password := r.Form.Get("password")
+
+		logrus.Infof("password: %s\n", password)
+		logrus.Infof("username: %s\n", username)
+
+		http.Redirect(w, r, "http://localhost:8080/api/health", http.StatusFound)
 	}
 }

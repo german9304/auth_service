@@ -15,7 +15,7 @@ func TestHandleOpenId(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "http://test", nil)
 
 	t.Run("should respond with 200 ok status", func(t *testing.T) {
-		h := handleOpenId()
+		h := handleOpenId("8081")
 		h(w, req)
 
 		if w.Result().StatusCode != http.StatusOK {
