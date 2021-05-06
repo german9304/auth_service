@@ -1,0 +1,26 @@
+version: '3'
+services:
+  database:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment: 
+      POSTGRES_PASSWORD: testing123
+      POSTGRES_USER: user@test
+      POSTGRES_DB: auth_db
+    container_name: auth_provider_db
+    volumes:
+      - authdata:/var/lib/postgresql/data
+  
+  api:
+    image: golang:latest
+    ports:
+      - 8081:8081
+    container_name: auth_provider_api
+    volumes: 
+      - ./:/api/
+    working_dir: /api/cmd/
+    command: ["go", "run", "main.go"]
+
+volumes:
+  authdata:
