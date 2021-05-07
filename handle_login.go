@@ -14,6 +14,6 @@ func handleLogin() http.HandlerFunc {
 		if err != nil {
 			logrus.Fatal(err)
 		}
-		http.ServeFile(w, r, filepath.Join(dir, "/client", "/public", "/index.html"))
+		http.ServeFile(w, r, filepath.Join(dir, "/public", "/login.html"))
 	}
 }
