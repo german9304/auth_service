@@ -12,22 +12,25 @@ import (
 )
 
 // Encrypts text and returns a base64 encoded text
-func Encrypt(text string) string {
+func Encrypt(text string) (string, error) {
 	plaintext := []byte(text)
 
 	block, err := aes.NewCipher([]byte(os.Getenv("encryptionKey")))
 	if err != nil {
-		logrus.Fatalf("first error: %s\n", err)
+		logrus.Error(err)
+		return "", err
 	}
 	aesgcm, err := cipher.NewGCM(block)
 	if err != nil {
-		panic(err.Error())
+		logrus.Error(err)
+		return "", err
 	}
 
 	nonce := make([]byte, aesgcm.NonceSize())
 	if _, err := io.ReadFull(rand.Reader, nonce); err != nil {
-		logrus.Fatalf("second error: %s\n", err)
+		logrus.Error(err)
+		return "", err
 	}
 	ciphertext := aesgcm.Seal(nonce, nonce, plaintext, nil)
-	return base64.StdEncoding.EncodeToString(ciphertext)
+	return base64.StdEncoding.EncodeToString(ciphertext), nil
 }

@@ -23,7 +23,10 @@ func main() {
 func run() error {
 	const PORT = "8081"
 
-	s := server.New(PORT)
+	s, err := server.New(PORT)
+	if err != nil {
+		return err
+	}
 	logrus.Infof("listening on http://localhost:%s\n", PORT)
 	return http.ListenAndServe(":"+PORT, s.Mux())
 }

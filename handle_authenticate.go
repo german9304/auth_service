@@ -23,11 +23,6 @@ func newAuthQueryMeta(queryValues url.Values) oauthQueryMeta {
 	}
 }
 
-type User struct {
-	Name     string
-	Password string
-}
-
 // handles authentication
 func handleAuthenticate() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {

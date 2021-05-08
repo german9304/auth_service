@@ -13,7 +13,7 @@ func (s *server) Routes() error {
 	s.mux.HandleFunc("/login", handleLogin())
 	s.mux.HandleFunc("/authenticate", handleAuthenticate())
 	s.mux.HandleFunc("/signup", handleSignUp())
-	s.mux.HandleFunc("/create-user", handleCreateUser())
+	s.mux.HandleFunc("/create-user", handleCreateUser(s))
 	s.mux.HandleFunc("/.well-known/openid-configuration", handleOpenId(s.port))
 
 	return err
