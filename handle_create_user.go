@@ -9,12 +9,17 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func handleCreateUser(s *server) http.HandlerFunc {
+// handleCreateUser handler to create a user
+func handleCreateUser(s DatabaseQuery) http.HandlerFunc {
+	type Response struct {
+		Data    string `json:"data"`
+		Created bool   `json:"created"`
+	}
 	return func(rw http.ResponseWriter, r *http.Request) {
 		r.Header.Set("Content-type", "application-json")
 		b, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			logrus.Fatal(err)
+			logrus.Error(err)
 			http.Error(rw, err.Error(), http.StatusBadRequest)
 			return
 		}
@@ -27,21 +32,22 @@ func handleCreateUser(s *server) http.HandlerFunc {
 			return
 		}
 		ctx := context.TODO()
-		result, err := s.CreateUser(ctx, user)
+		_, err = s.CreateUser(ctx, user)
 		if err != nil {
+			logrus.Info("error here create user")
 			http.Error(rw, err.Error(), http.StatusBadRequest)
 			return
 		}
 
-		result.Scan(&user)
+		logrus.Info("user is created")
 
-		logrus.Infof("%v\n", user)
-
-		b, err = json.Marshal(user)
+		response := Response{Data: "user created", Created: true}
+		responseBody, err := json.Marshal(response)
 		if err != nil {
 			http.Error(rw, err.Error(), http.StatusBadRequest)
 			return
 		}
-		rw.Write(b)
+		rw.WriteHeader(http.StatusCreated)
+		rw.Write(responseBody)
 	}
 }

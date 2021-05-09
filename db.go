@@ -3,53 +3,51 @@ package server
 import (
 	"context"
 	"database/sql"
-	"os"
+	"fmt"
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/authservice/encryption"
-	"github.com/jackc/pgx/v4"
-	"github.com/jackc/pgx/v4/stdlib"
+	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
 )
 
-type Db interface {
-	createUser()
+type DatabaseQuery interface {
+	CreateUser(ctx context.Context, user User) (int64, error)
 }
 
-// setDB sets initial config database
-func setDb() (*sql.DB, error) {
-	c, err := pgx.ParseConfig(os.Getenv("psqlEndpoint"))
-	if err != nil {
-		logrus.Fatal(err)
-		return nil, err
-	}
-	db, err := sql.Open("pgx", stdlib.RegisterConnConfig(c))
-	if err != nil {
-		logrus.Fatal(err)
-		return nil, err
-	}
-	return db, nil
+type Database struct {
+	sql *sql.DB
 }
 
-func (s *server) CreateUser(ctx context.Context, user User) (*sql.Rows, error) {
+// CreateUser creates a user and adds a row to the database
+func (d *Database) CreateUser(ctx context.Context, user User) (int64, error) {
+	uuid, err := uuid.NewUUID()
+	if err != nil {
+		logrus.Error(err)
+		return 0, err
+	}
 	encyptedPassword, err := encryption.Encrypt(user.Password)
 	if err != nil {
 		logrus.Error(err)
-		return nil, err
+		return 0, err
 	}
-
 	rows, err := sq.Insert("users").
 		Columns("user_id", "name", "email", "age", "password").
 		Suffix("RETURNING *").
-		Values(user.Id, user.Name, user.Email, user.Age, encyptedPassword).
-		RunWith(s.db).
+		Values(fmt.Sprintf("PROD-%s", uuid), user.Name, user.Email, user.Age, encyptedPassword).
+		RunWith(d.sql).
 		PlaceholderFormat(sq.Dollar).
-		QueryContext(ctx)
+		ExecContext(ctx)
 
 	if err != nil {
 		logrus.Error(err)
-		return nil, err
+		return 0, err
 	}
 
-	return rows, nil
+	row, err := rows.RowsAffected()
+	if err != nil {
+		logrus.Error(err)
+		return 0, err
+	}
+	return row, nil
 }

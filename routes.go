@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 )
 
+// Routes define the server routes
 func (s *server) Routes() error {
 	dir, err := os.Getwd()
 	s.mux.HandleFunc("/health", handleHealth())
@@ -13,7 +14,7 @@ func (s *server) Routes() error {
 	s.mux.HandleFunc("/login", handleLogin())
 	s.mux.HandleFunc("/authenticate", handleAuthenticate())
 	s.mux.HandleFunc("/signup", handleSignUp())
-	s.mux.HandleFunc("/create-user", handleCreateUser(s))
+	s.mux.HandleFunc("/create-user", handleCreateUser(s.db))
 	s.mux.HandleFunc("/.well-known/openid-configuration", handleOpenId(s.port))
 
 	return err

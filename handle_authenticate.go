@@ -2,26 +2,9 @@ package server
 
 import (
 	"net/http"
-	"net/url"
 
 	"github.com/sirupsen/logrus"
 )
-
-type oauthQueryMeta struct {
-	responseType string
-	redirectUri  string
-	clientId     string
-	responseMode string
-}
-
-func newAuthQueryMeta(queryValues url.Values) oauthQueryMeta {
-	return oauthQueryMeta{
-		responseType: queryValues.Get("response_type"),
-		redirectUri:  queryValues.Get("redirect_uri"),
-		clientId:     queryValues.Get("client_id"),
-		responseMode: queryValues.Get("response_mode"),
-	}
-}
 
 // handles authentication
 func handleAuthenticate() http.HandlerFunc {
