@@ -28,5 +28,5 @@ func run() error {
 		return err
 	}
 	logrus.Infof("listening on http://localhost:%s\n", PORT)
-	return http.ListenAndServe(":"+PORT, s.Mux())
+	return http.ListenAndServe(":"+PORT, s)
 }
