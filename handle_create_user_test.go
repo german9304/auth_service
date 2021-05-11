@@ -24,6 +24,9 @@ func TestHandleCreateUser(t *testing.T) {
 		Password: "12344",
 	}
 	mockDatabaseQuery := MockDatabaseQuery{}
+	s := server{
+		db: &mockDatabaseQuery,
+	}
 	t.Parallel()
 	t.Run("should respond with 201 create status", func(t *testing.T) {
 		var buf bytes.Buffer
@@ -31,12 +34,12 @@ func TestHandleCreateUser(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		handler := handleCreateUser(&mockDatabaseQuery)
+		handler := s.handleCreateUser()
 		req := httptest.NewRequest("GET", "http://create-user", &buf)
 		req.Header.Set("Content-type", "application/json")
-		responseRecoder := httptest.NewRecorder()
-		handler.ServeHTTP(responseRecoder, req)
-		expectedStatusCode := responseRecoder.Result().StatusCode
+		responseRecorder := httptest.NewRecorder()
+		handler.ServeHTTP(responseRecorder, req)
+		expectedStatusCode := responseRecorder.Result().StatusCode
 
 		if expectedStatusCode != http.StatusCreated {
 			t.Fatalf("got: %d want: %d", expectedStatusCode, http.StatusCreated)

@@ -12,7 +12,7 @@ type health struct {
 	Status string `json:"status"`
 }
 
-func handleHealth() http.HandlerFunc {
+func (s *server) handleHealth() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		greet := health{Data: "Health endpoint", Status: "Ok"}
 		w.Header().Set("Content-type", "application/json")
@@ -21,6 +21,7 @@ func handleHealth() http.HandlerFunc {
 		if err != nil {
 			logrus.Error("error marshaling struct")
 		}
+		logrus.Info("health endpoint")
 		w.Write(b)
 	}
 }

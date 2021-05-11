@@ -18,7 +18,7 @@ type openIdFields struct {
 
 // handleOpenId endpoint for openId meta fields
 // to authenticate users.
-func handleOpenId(port string) http.HandlerFunc {
+func (s *server) handleOpenId(port string) http.HandlerFunc {
 	const uri = "http://localhost:"
 	return func(w http.ResponseWriter, r *http.Request) {
 		openIdField := openIdFields{

@@ -9,13 +9,14 @@ import (
 )
 
 func TestHandleOpenId(t *testing.T) {
+	s := server{}
 	t.Parallel()
 
 	w := httptest.NewRecorder()
 	req := httptest.NewRequest(http.MethodGet, "http://test", nil)
 
 	t.Run("should respond with 200 ok status", func(t *testing.T) {
-		h := handleOpenId("8081")
+		h := s.handleOpenId("8081")
 		h(w, req)
 
 		if w.Result().StatusCode != http.StatusOK {

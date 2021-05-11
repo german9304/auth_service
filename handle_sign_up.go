@@ -8,7 +8,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func handleSignUp() http.HandlerFunc {
+func (s *server) handleSignUp() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
 		logrus.Info("handle signup")
 		dir, err := os.Getwd()

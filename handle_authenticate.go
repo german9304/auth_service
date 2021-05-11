@@ -7,7 +7,7 @@ import (
 )
 
 // handles authentication
-func handleAuthenticate() http.HandlerFunc {
+func (s *server) handleAuthenticate() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		logrus.Info("authenticating with username and password")
 		// parse url encoded form

@@ -10,7 +10,7 @@ import (
 )
 
 // handleCreateUser handler to create a user
-func handleCreateUser(s DatabaseQuery) http.HandlerFunc {
+func (s *server) handleCreateUser() http.HandlerFunc {
 	type Response struct {
 		Data    string `json:"data"`
 		Created bool   `json:"created"`
@@ -32,7 +32,7 @@ func handleCreateUser(s DatabaseQuery) http.HandlerFunc {
 			return
 		}
 		ctx := context.TODO()
-		_, err = s.CreateUser(ctx, user)
+		_, err = s.db.CreateUser(ctx, user)
 		if err != nil {
 			logrus.Info("error here create user")
 			http.Error(rw, err.Error(), http.StatusBadRequest)
@@ -40,13 +40,13 @@ func handleCreateUser(s DatabaseQuery) http.HandlerFunc {
 		}
 
 		logrus.Info("user is created")
-
 		response := Response{Data: "user created", Created: true}
 		responseBody, err := json.Marshal(response)
 		if err != nil {
 			http.Error(rw, err.Error(), http.StatusBadRequest)
 			return
 		}
+		rw.Header().Set("Content-type", "application/json")
 		rw.WriteHeader(http.StatusCreated)
 		rw.Write(responseBody)
 	}
