@@ -1,0 +1,42 @@
+:root {
+    --font-auth: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+header.signup-title > h1 {
+    font-family: var(--font-auth);
+}
+
+input {
+    display: block;
+    border-radius: .1em;
+    padding: .5em;
+    font-size: .9em;
+}
+
+.phase {
+    display: flex;
+    justify-content: space-between;
+}
+
+.phase.one {
+    /* margin-right: 1em; */
+    margin-bottom: 1em;
+} 
+
+.submit-area {
+    display: flex;
+    justify-content: center;
+    margin-top: .8em;
+}
+
+.submit-area .btn {
+    outline: none;
+    border-radius: .2em;
+    padding: .5em;
+    font-family: var(--font-auth);
+    font-size: 1.5em;
+    border: none;
+    background-color:  rgb(58, 57, 117);
+    cursor: pointer;
+    color: #eeee;
+}

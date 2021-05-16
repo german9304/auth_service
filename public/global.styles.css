@@ -1,0 +1,41 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inner-container {
+    margin-top: 1em;
+}
+
+input {
+    border: solid .1em rgb(180, 174, 174);
+    /* padding: .5em; */
+}
+
+label {
+    display: block;
+    /* padding: .4em 0; */
+}
+
+.inner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 500px;
+    border: solid .1em rgb(182, 179, 179);
+}
+
+.form-auth {
+    padding: 1em;
+    width: 350px;
+
+}
+
+.auth_service .form-container {
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* padding: .3em; */
+}
+
