@@ -5,11 +5,14 @@
 header.signup-title > h1 {
     font-family: var(--font-auth);
 }
+/* form {
+    border: solid 1px red;
+} */
 
 input {
     display: block;
     border-radius: .1em;
-    padding: .5em;
+    padding: .5em .8em;
     font-size: .9em;
 }
 
@@ -26,7 +29,7 @@ input {
 .submit-area {
     display: flex;
     justify-content: center;
-    margin-top: .8em;
+    margin-top: 2em;
 }
 
 .submit-area .btn {
