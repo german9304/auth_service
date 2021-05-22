@@ -1,5 +1,3 @@
-const form = document.getElementById('auth-create-user');
-
 // get user attributes
 function getUserAttributeValues(e) {
     const userAttributes = ['name', 'age', 'password', 'email'];
@@ -10,6 +8,12 @@ function getUserAttributeValues(e) {
     }, {});
 }
 
+/**
+ * Creates a user by making an http POST request
+ * 
+ * @param {object} user with fields name, email, password and age
+ * @returns Promise with status code and response data
+ */
 async function createUser(user) {
     const data = await fetch('/create-user', {
         method: 'POST',
@@ -26,6 +30,11 @@ async function createUser(user) {
     }
 }
 
+/**
+ * Handles form submit
+ * 
+ * @param {HTMLElement} e form element
+ */
 async function handleSubmit(e) {
     e.preventDefault();
     const userAttributes = getUserAttributeValues(e);
@@ -45,6 +54,7 @@ async function handleSubmit(e) {
 }
 
 // if form element is present
+const form = document.getElementById('auth-create-user');
 if(form) {
     form.addEventListener('submit', handleSubmit);
 }
