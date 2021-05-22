@@ -1,3 +1,12 @@
+:root {
+    --form-auth-color: #222121;
+    --font-auth: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+html {
+    box-sizing: border-box;
+}
+
 .container {
     display: flex;
     justify-content: center;
@@ -20,7 +29,6 @@ label {
 
 .inner-container {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 500px;
@@ -29,13 +37,9 @@ label {
 
 .form-auth {
     padding: 1em;
-    width: 350px;
-
+    width: 380px;
 }
 
-.auth_service .form-container {
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* padding: .3em; */
+.hide {
+    display: none;
 }
-
