@@ -1,0 +1,82 @@
+header.signup-title > h1 {
+    font-family: var(--font-auth); 
+    color: rgba(241, 238, 238, 0.933);
+}
+/* form {
+    border: solid 1px red;
+} */
+
+input {
+    display: block;
+    border-radius: .1em;
+    padding: .8em 1em;
+    font-size: .9em;
+    outline: none;
+}
+
+.phase {
+    display: flex;
+    justify-content: space-between;
+}
+
+.phase.one {
+    /* margin-right: 1em; */
+    margin-bottom: 1em;
+} 
+
+.submit-area {
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
+}
+
+.submit-area .btn {
+    outline: none;
+    border-radius: .2em;
+    padding: .5em;
+    font-family: var(--font-auth);
+    font-size: 1.5em;
+    border: none;
+    background-color:  rgb(58, 57, 117);
+    cursor: pointer;
+    color: #eeee;
+}
+
+.inner-container {
+    background-color: var(--form-auth-color);
+}
+
+.after-signup {
+    font-family: var(--font-auth);
+    color: #eeee;
+    height: 200px;
+}
+
+.container-signup {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3em;
+    width: 210px;
+}
+
+.redirect-auth {
+    background-color:  rgb(58, 57, 117);
+    width: 90px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: .3em;
+    border-radius: 1em;
+}
+
+
+.after-signup a {
+    text-decoration: none;
+    color: #eeee;
+    padding: .6em;
+    display: flex;
+    font-family: var(--font-auth);
+    font-size: 1.3em;
+    font-weight: bold;
+}

@@ -19,8 +19,8 @@ services:
     container_name: auth_provider_api
     volumes: 
       - ./:/api/
-    working_dir: /api/cmd/
-    command: ["go", "run", "main.go"]
+    working_dir: /api/
+    command: ["go", "run", "cmd/main.go"]
 
 volumes:
   authdata:

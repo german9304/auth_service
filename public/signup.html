@@ -6,11 +6,57 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>signup</title>
+    <link rel="stylesheet" href="/public/global.styles.css">
+    <link rel="stylesheet" href="/public/src/signup.css">
     <script defer src='/public/src/signup.js'></script>
 </head>
 
 <body>
-    <h1>Signup</h1>
+    <div class="container">
+        <div class="inner-container">
+            <div class="user-create">
+                <section>
+                    <header class="signup-title">
+                        <h1>Create your account</h1>
+                    </header>
+                </section>
+                <form id="auth-create-user" class="form-auth">
+                    <section class="form-container phase one">
+                        <div class="item-input user-name">
+                            <input type="text" name="name" placeholder="Name" class="form-input name">
+                        </div>
+                        <div class="item-input email">
+                            <input type="text" name="email" placeholder="Email" class="form-input email">
+                        </div>
+                    </section>
+                    <section class="form-container phase two">
+                        <div class="item-input age">
+                            <input type="number" name="age" placeholder="Age" class="form-input age">
+                        </div>
+                        <div class="item-input password">
+                            <input type="password" placeholder="Password" name="password" class="form-input password">
+                        </div>
+                    </section>
+                    <div class="submit-area">
+                        <button class="btn auth-btn">signup</button>
+                    </div>
+                </form>
+            </div>
+            <div class="after-signup hide">
+                <header>
+                    <h1>User created</h1>
+                </header>
+                <div class="container-signup">
+                    <div class="redirect-auth signup-redirect">
+                        <a href="/public/login.html">Login</a>
+                    </div>
+                    <div class="redirect-auth login-redirect">
+                        <a href="/public/signup.html">Signup</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

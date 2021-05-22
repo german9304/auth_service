@@ -1,0 +1,45 @@
+:root {
+    --form-auth-color: #222121;
+    --font-auth: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inner-container {
+    margin-top: 1em;
+}
+
+input {
+    border: solid .1em rgb(180, 174, 174);
+    /* padding: .5em; */
+}
+
+label {
+    display: block;
+    /* padding: .4em 0; */
+}
+
+.inner-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 500px;
+    border: solid .1em rgb(182, 179, 179);
+}
+
+.form-auth {
+    padding: 1em;
+    width: 380px;
+}
+
+.hide {
+    display: none;
+}
