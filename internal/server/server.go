@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/german/db"
 	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/stdlib"
 	"github.com/sirupsen/logrus"
@@ -13,7 +14,7 @@ import (
 type server struct {
 	mux  *http.ServeMux
 	port string
-	db   DatabaseQuery
+	db   db.DatabaseQuery
 }
 
 func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -25,7 +26,7 @@ func (s *server) Mux() *http.ServeMux {
 }
 
 // newDatabase sets initial config database
-func newDatabase() (DatabaseQuery, error) {
+func newDatabase() (db.DatabaseQuery, error) {
 	c, err := pgx.ParseConfig(os.Getenv("psqlEndpoint"))
 	if err != nil {
 		logrus.Fatal(err)
@@ -36,7 +37,7 @@ func newDatabase() (DatabaseQuery, error) {
 		logrus.Fatal(err)
 		return nil, err
 	}
-	return &Database{sql: db}, nil
+	return &db.Database{sql: db}, nil
 }
 
 func New(port string) (*server, error) {

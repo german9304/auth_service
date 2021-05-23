@@ -1,4 +1,4 @@
-package server
+package db
 
 import (
 	"context"
@@ -6,13 +6,14 @@ import (
 	"fmt"
 
 	sq "github.com/Masterminds/squirrel"
-	"github.com/authservice/encryption"
+	"github.com/german/encryption"
+	model "github.com/german/user"
 	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
 )
 
 type DatabaseQuery interface {
-	CreateUser(ctx context.Context, user User) (int64, error)
+	CreateUser(ctx context.Context, user model.User) (int64, error)
 }
 
 type Database struct {
@@ -20,7 +21,7 @@ type Database struct {
 }
 
 // CreateUser creates a user and adds a row to the database
-func (d *Database) CreateUser(ctx context.Context, user User) (int64, error) {
+func (d *Database) CreateUser(ctx context.Context, user model.User) (int64, error) {
 	uuid, err := uuid.NewUUID()
 	if err != nil {
 		logrus.Error(err)
