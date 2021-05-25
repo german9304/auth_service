@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	sq "github.com/Masterminds/squirrel"
-	"github.com/authservice/encryption"
+	"github.com/german9304/encryption"
 	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
 )
