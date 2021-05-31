@@ -12,7 +12,33 @@
 </head>
 
 <body>
-    <h1>Login page</h1>
+    <div class="container">
+        <div class="inner-container">
+            <div class="user-login">
+                <section class="title">
+                    <header class="login-title">
+                        <h1>Sign in</h1>
+                    </header>
+                </section>
+                <div class="container-login">
+                    <form id="auth-login" class="form-auth" method="POST" action="/login-user">
+                        <div class="form-container">
+                            <div class="inpt email-login">
+                                <input type="text" placeholder="Email" required name="email">
+                            </div>
+                            <div class="inpt password-login">
+                                <input type="password" placeholder="Password" required name="password">
+                            </div>
+                        </div>
+                        <div class="submit-area">
+                            <button class="btn auth-btn submit">Submit</button>
+                            <button class="btn auth-btn account">Sign up</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

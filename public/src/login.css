@@ -1,0 +1,26 @@
+.inpt {
+    margin-bottom: 3em;
+}
+
+.login-title {
+    font-family: var(--font-auth);
+    text-align: center;
+}
+
+.form-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.submit-area {
+    margin-top: 0;
+}
+
+.inner-container {
+    width: 700px;
+}
+
+.submit {
+    margin-right: 1em;
+}
+  

@@ -1,26 +1,52 @@
 package server
 
 import (
+	"context"
 	"net/http"
+	"net/url"
 
+	"github.com/german9304/encryption"
 	"github.com/sirupsen/logrus"
 )
 
-// handles authentication
+// handles authentication authenticates user
 func (s *server) handleAuthenticate() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		ctx := context.TODO()
+		reqCtx := r.WithContext(ctx)
 		logrus.Info("authenticating with username and password")
 		// parse url encoded form
-		err := r.ParseForm()
+		err := reqCtx.ParseForm()
 		if err != nil {
 			logrus.Info(err)
 		}
-		username := r.Form.Get("username")
-		password := r.Form.Get("password")
+		email := reqCtx.Form.Get("email")
+		password := reqCtx.Form.Get("password")
 
-		logrus.Infof("password: %s\n", password)
-		logrus.Infof("username: %s\n", username)
+		user, err := s.db.UserByEmail(ctx, email)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
 
-		http.Redirect(w, r, "http://localhost:8080/api/health", http.StatusFound)
+		decryptedPassword := encryption.Decrypt(user.Password)
+		if decryptedPassword != password {
+			http.Error(w, "invalid password", http.StatusBadRequest)
+			return
+		}
+
+		redirectUri := r.URL.Query().Get("redirectUri")
+		authorizationEndpoint := r.URL.Query().Get("authorizationEndpoint")
+		responseMode := r.URL.Query().Get("responseMode")
+
+		logrus.Infof("authorization endpoint: %s\n", authorizationEndpoint)
+		if responseMode == "form_post" {
+			values := url.Values{}
+			values.Add("id_token", "")
+			w.Header().Set("Content-type", "application/x-www-form-urlencoded")
+			w.Write([]byte(values.Encode()))
+		}
+
+		http.Redirect(w, r, redirectUri, http.StatusFound)
 	}
 }

@@ -2,19 +2,11 @@ package server
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 )
-
-// MockDatabaseQuery to mock D
-type MockDatabaseQuery struct{}
-
-func (md *MockDatabaseQuery) CreateUser(ctx context.Context, user User) (int64, error) {
-	return 0, nil
-}
 
 func TestHandleCreateUser(t *testing.T) {
 	user := User{
@@ -35,7 +27,7 @@ func TestHandleCreateUser(t *testing.T) {
 			t.Fatal(err)
 		}
 		handler := s.handleCreateUser()
-		req := httptest.NewRequest("GET", "http://create-user", &buf)
+		req := httptest.NewRequest("GET", "/create-user", &buf)
 		req.Header.Set("Content-type", "application/json")
 		responseRecorder := httptest.NewRecorder()
 		handler.ServeHTTP(responseRecorder, req)

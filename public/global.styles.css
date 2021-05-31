@@ -13,14 +13,15 @@ html {
     align-items: center;
 }
 
-.inner-container {
-    margin-top: 1em;
-}
-
 input {
     border: solid .1em rgb(180, 174, 174);
-    /* padding: .5em; */
+    display: block;
+    border-radius: .1em;
+    padding: .8em 1em;
+    font-size: .9em;
+    outline: none;
 }
+
 
 label {
     display: block;
@@ -28,6 +29,7 @@ label {
 }
 
 .inner-container {
+    margin-top: 1em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -42,4 +44,22 @@ label {
 
 .hide {
     display: none;
+}
+
+.submit-area {
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
+}
+
+.submit-area .btn {
+    outline: none;
+    border-radius: .2em;
+    padding: .5em;
+    font-family: var(--font-auth);
+    font-size: 1.5em;
+    border: none;
+    background-color:  rgb(58, 57, 117);
+    cursor: pointer;
+    color: #eeee;
 }

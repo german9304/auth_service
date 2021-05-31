@@ -49,6 +49,9 @@ func New(port string) (*server, error) {
 		port: port,
 		db:   db,
 	}
-	s.Routes()
+	err = s.Routes()
+	if err != nil {
+		return nil, err
+	}
 	return s, nil
 }

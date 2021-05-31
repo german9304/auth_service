@@ -10,7 +10,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// Decrypt takes a base64 text and encrypts it
+// Decrypt takes a base64 encrypted texts and decrypts the text
 func Decrypt(text string) string {
 	ciphertext, err := base64.StdEncoding.DecodeString(text)
 	if err != nil {
